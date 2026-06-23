@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- claro -->
+    <color name="turquoise">#0A61CB</color>
+    <color name="darkBlue">#08326A</color>
+    <color name="lightGrey">#EFF7F9</color>
+
+    <!-- escuro -->
+    <color name="scarlet">#F04445</color>
+    <color name="darkRed">#8C2F2F</color>
+    <color name="darkGrey">#161616</color>
+
 </resources>
