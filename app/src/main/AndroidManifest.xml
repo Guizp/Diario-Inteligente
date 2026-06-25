@@ -12,36 +12,48 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DiarioInteligente"
         tools:targetApi="31">
+
         <activity
-            android:name=".ui.ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.EditReminderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ReminderDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.AddReminderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.EditReminderActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.ReminderDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.AddReminderActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

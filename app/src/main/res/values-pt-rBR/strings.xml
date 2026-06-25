@@ -14,4 +14,27 @@
     <string name="hint_email_register">E-mail válido</string>
     <string name="hint_password_register">Senha (mínimo 6 dígitos)</string>
     <string name="btn_register">Finalizar Cadastro</string>
+
+    <string name="title_home">Meus Lembretes</string>
+    <string name="btn_sair">Sair</string>
+    <string name="desc_novo_lembrete">Novo Lembrete</string>
+
+    <string name="label_titulo">Título:</string>
+    <string name="hint_titulo">Digite o título do lembrete</string>
+    <string name="label_descricao">Descrição:</string>
+    <string name="hint_descricao">O que você precisa lembrar?</string>
+    <string name="btn_salvar">Salvar Lembrete</string>
+
+    <string name="titulo_tela_detalhes">Detalhes do Lembrete</string>
+    <string name="status_carregando">Carregando…</string>
+    <string name="placeholder_data_hora">Data/Hora</string>
+    <string name="btn_editar">Editar Lembrete</string>
+
+    <string name="titulo_tela_editar">Editar Lembrete</string>
+    <string name="btn_salvar_alteracoes">Salvar Alterações</string>
+    <string name="btn_excluir">Excluir Lembrete</string>
+
+    <string name="placeholder_titulo_item">Título do Item</string>
+    <string name="placeholder_descricao_item">Descrição curta…</string>
+    <string name="placeholder_data_hora_item">00/00/0000 00:00</string>
 </resources>

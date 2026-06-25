@@ -1,21 +1,93 @@
 package com.example.diario_inteligente.ui
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.diario_inteligente.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diario_inteligente.databinding.ActivityMainBinding
+import com.example.diario_inteligente.model.Reminder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private lateinit var lembreteAdapter: LembreteAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        Log.d("MAIN_HOME", "MainActivity (Home) criada com sucesso.")
+
+        configurarRecyclerView()
+
+        binding.fabNovoLembrete.setOnClickListener {
+            Log.d("MAIN_HOME", "Clicou no FAB. Indo para NovoLembreteActivity")
+            val intent = Intent(this, AddReminderActivity::class.java)
+            startActivity(intent)
         }
+
+        binding.btnSair.setOnClickListener {
+            Log.d("MAIN_HOME", "Usuário clicou em Sair. Deslogando...")
+            auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        carregarLembretesDoFirestore()
+    }
+
+    private fun configurarRecyclerView() {
+        lembreteAdapter = LembreteAdapter(emptyList()) { lembreteClicado ->
+            val intent = Intent(this, ReminderDetailActivity::class.java)
+            intent.putExtra("LEMBRETE_ID", lembreteClicado.id)
+            startActivity(intent)
+        }
+
+        binding.rvLembretes.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = lembreteAdapter
+        }
+    }
+
+    private fun carregarLembretesDoFirestore() {
+        val userIdAtual = auth.currentUser?.uid ?: ""
+
+        if (userIdAtual.isEmpty()) {
+            Log.w("MAIN_HOME_WARN", "Usuário não está logado no Firebase. Cancelando busca.")
+            return
+        }
+
+        Log.d("MAIN_HOME", "Buscando lembretes no Firestore do usuário: $userIdAtual")
+
+        db.collection("reminders")
+            .whereEqualTo("userId", userIdAtual)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val listaLembretes = mutableListOf<Reminder>()
+
+                for (documento in querySnapshot.documents) {
+                    val lembrete = documento.toObject(Reminder::class.java)
+                    if (lembrete != null) {
+                        listaLembretes.add(lembrete)
+                    }
+                }
+
+                Log.d("MAIN_HOME", "Total de lembretes encontrados: ${listaLembretes.size}")
+                lembreteAdapter.atualizarLista(listaLembretes)
+            }
+            .addOnFailureListener { e ->
+                Log.e("MAIN_HOME_ERR", "Erro ao buscar lembretes no Firestore", e)
+                Toast.makeText(this, "Erro ao carregar seus lembretes.", Toast.LENGTH_SHORT).show()
+            }
     }
 }

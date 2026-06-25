@@ -1,10 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ReminderDetailActivity">
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#FAFAFA">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_tela_detalhes"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_titulo"
+        android:textStyle="bold"
+        android:textColor="#555555" />
+
+    <TextView
+        android:id="@+id/txtDetalheTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/status_carregando"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_descricao"
+        android:textStyle="bold"
+        android:textColor="#555555" />
+
+    <TextView
+        android:id="@+id/txtDetalheDescricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/status_carregando"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/txtDetalheDataHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_data_hora"
+        android:textColor="#999999"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btnIrParaEditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_editar"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp" />
+
+</LinearLayout>

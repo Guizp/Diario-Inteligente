@@ -14,4 +14,27 @@
     <string name="hint_email_register">Valid e-mail</string>
     <string name="hint_password_register">Password (min 6 digits)</string>
     <string name="btn_register">Finish Registration</string>
+
+    <string name="title_home">My Reminders</string>
+    <string name="btn_sair">Log Out</string>
+    <string name="desc_novo_lembrete">New Reminder</string>
+
+    <string name="label_titulo">Title:</string>
+    <string name="hint_titulo">Enter the reminder title</string>
+    <string name="label_descricao">Description:</string>
+    <string name="hint_descricao">What do you need to remember?</string>
+    <string name="btn_salvar">Save Reminder</string>
+
+    <string name="titulo_tela_detalhes">Reminder Details</string>
+    <string name="status_carregando">Loading…</string>
+    <string name="placeholder_data_hora">Date/Time</string>
+    <string name="btn_editar">Edit Reminder</string>
+
+    <string name="titulo_tela_editar">Edit Reminder</string>
+    <string name="btn_salvar_alteracoes">Save Changes</string>
+    <string name="btn_excluir">Delete Reminder</string>
+
+    <string name="placeholder_titulo_item">Item Title</string>
+    <string name="placeholder_descricao_item">Short description…</string>
+    <string name="placeholder_data_hora_item">00/00/0000 00:00</string>
 </resources>
