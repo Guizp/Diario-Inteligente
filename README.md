@@ -74,7 +74,7 @@ O app oferece uma interface moderna e adaptável, permitindo que o usuário:
 ## 🚀 Como executar o projeto
 1. Clone este repositório:
    ```bash
-   git clone [https://github.com/jeniffer-leme/smart-reminder.git](https://github.com/jeniffer-leme/smart-reminder.git)```
+   git clone [https://github.com/Guizp/Smart-Reminder.git](https://github.com/Guizp/Smart-Reminder.git)```
 2. Abra o projeto no Android Studio.
 3. Aguarde a sincronização do Gradle.
 4. Execute o app em um emulador ou dispositivo físico.
