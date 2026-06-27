@@ -38,6 +38,12 @@ class LembreteAdapter(
             binding.txtDataHoraItem.text =
                 "${lembrete.date} às ${lembrete.time}"
 
+            binding.txtPrazoItem.text = if (lembrete.prazoData.isNotEmpty() && lembrete.prazoHora.isNotEmpty()) {
+                "Prazo: ${lembrete.prazoData} às ${lembrete.prazoHora}"
+            } else {
+                "Sem prazo definido"
+            }
+
             if (lembrete.imageBase64.isNotEmpty()) {
 
                 binding.imgReminder.setImageBitmap(

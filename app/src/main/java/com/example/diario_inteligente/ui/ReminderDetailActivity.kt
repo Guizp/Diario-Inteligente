@@ -37,6 +37,10 @@ class ReminderDetailActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        binding.btnVoltar.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onStart() {
@@ -64,6 +68,12 @@ class ReminderDetailActivity : AppCompatActivity() {
 
                     binding.txtDetalheDataHora.text =
                         "Criado em: ${lembrete.date} às ${lembrete.time}"
+
+                    binding.txtDetalhePrazo.text = if (lembrete.prazoData.isNotEmpty() && lembrete.prazoHora.isNotEmpty()) {
+                        "Prazo final: ${lembrete.prazoData} às ${lembrete.prazoHora}"
+                    } else {
+                        "Prazo final: Não definido"
+                    }
 
                     if (lembrete.imageBase64.isNotEmpty()) {
 

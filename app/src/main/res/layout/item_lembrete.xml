@@ -38,7 +38,14 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
-
+        <TextView
+            android:id="@+id/txtPrazoItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F44336"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="6dp" />
 
         <TextView
             android:id="@+id/txtDataHoraItem"

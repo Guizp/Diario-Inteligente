@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import com.example.diario_inteligente.auth.AuthManager
 import com.example.diario_inteligente.databinding.ActivitySettingsBinding
 
@@ -63,6 +64,17 @@ class SettingsActivity : AppCompatActivity() {
             ).show()
         }
 
+        binding.edtTimerMinimo.doAfterTextChanged { text ->
+            val minutosTexto = text.toString().trim()
+            // Se o usuário apagar tudo, assume 0 ou um valor padrão seguro (ex: 5)
+            val minutos = if (minutosTexto.isNotEmpty()) minutosTexto.toInt() else 5
+
+            preferences.edit()
+                .putInt("timer_minimo_lembrete", minutos)
+                .apply()
+        }
+
+
         binding.btnLogout.setOnClickListener {
 
             AuthManager().logout()
@@ -75,6 +87,10 @@ class SettingsActivity : AppCompatActivity() {
             )
 
             finishAffinity()
+        }
+
+        binding.btnVoltar.setOnClickListener {
+            finish()
         }
     }
 
@@ -97,5 +113,9 @@ class SettingsActivity : AppCompatActivity() {
                 "sensor_proximidade",
                 true
             )
+
+        // RECUPERA O TIMER SALVO (Padrão: 5 minutos antes se não existir nada salvo)
+        val timerSalvo = preferences.getInt("timer_minimo_lembrete", 5)
+        binding.edtTimerMinimo.setText(timerSalvo.toString())
     }
 }

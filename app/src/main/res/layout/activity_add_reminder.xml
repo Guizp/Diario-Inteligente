@@ -66,6 +66,68 @@
         android:background="@android:drawable/edit_text"
         android:layout_marginBottom="24dp" />
 
+    <!-- SEÇÃO DO PRAZO  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="24dp">
+
+        <!-- Campo de Data -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data do Prazo"
+                android:textStyle="bold"
+                android:textColor="#555555"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edtPrazoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: 29/06/2026"
+                android:padding="12dp"
+                android:inputType="date"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+
+        <!-- Campo de Hora -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hora do Prazo"
+                android:textStyle="bold"
+                android:textColor="#555555"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edtPrazoHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: 14:00"
+                android:padding="12dp"
+                android:inputType="time"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/btnSalvarLembrete"
         android:layout_width="match_parent"
@@ -73,5 +135,14 @@
         android:text="@string/btn_salvar"
         android:backgroundTint="#2196F3"
         android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Voltar"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#333333"/>
 
 </LinearLayout>

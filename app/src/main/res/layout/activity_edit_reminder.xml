@@ -62,6 +62,64 @@
         android:background="@android:drawable/edit_text"
         android:layout_marginBottom="24dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar Data"
+                android:textStyle="bold"
+                android:textColor="#555555"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edtEditarPrazoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: 29/06/2026"
+                android:padding="12dp"
+                android:inputType="date"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar Hora"
+                android:textStyle="bold"
+                android:textColor="#555555"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edtEditarPrazoHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: 14:00"
+                android:padding="12dp"
+                android:inputType="time"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnSalvarAlteracao"
         android:layout_width="match_parent"
@@ -77,6 +135,16 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_excluir"
         android:backgroundTint="#F44336"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="4dp"/>
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Voltar"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#333333"/>
 
 </LinearLayout>

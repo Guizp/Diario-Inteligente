@@ -51,6 +51,9 @@ class EditReminderActivity : AppCompatActivity() {
                     binding.edtEditarTitulo.setText(lembrete.title)
                     binding.edtEditarDescricao.setText(lembrete.description)
 
+                    binding.edtEditarPrazoData.setText(lembrete.prazoData)
+                    binding.edtEditarPrazoHora.setText(lembrete.prazoHora)
+
                     imageBase64 = lembrete.imageBase64
 
                     if (imageBase64.isNotEmpty()) {
@@ -74,7 +77,10 @@ class EditReminderActivity : AppCompatActivity() {
             val novaDescricao =
                 binding.edtEditarDescricao.text.toString().trim()
 
-            if (novoTitulo.isEmpty() || novaDescricao.isEmpty()) {
+            val novoPrazoData = binding.edtEditarPrazoData.text.toString().trim()
+            val novoPrazoHora = binding.edtEditarPrazoHora.text.toString().trim()
+
+            if (novoTitulo.isEmpty() || novaDescricao.isEmpty() || novoPrazoData.isEmpty() || novoPrazoHora.isEmpty()) {
 
                 Toast.makeText(
                     this,
@@ -90,7 +96,9 @@ class EditReminderActivity : AppCompatActivity() {
                 .update(
                     "title", novoTitulo,
                     "description", novaDescricao,
-                    "imageBase64", imageBase64
+                    "imageBase64", imageBase64,
+                    "prazoData", novoPrazoData,
+                    "prazoHora", novoPrazoHora
                 )
                 .addOnSuccessListener {
 
@@ -146,6 +154,10 @@ class EditReminderActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+        }
+
+        binding.btnVoltar.setOnClickListener {
+            finish()
         }
     }
 }

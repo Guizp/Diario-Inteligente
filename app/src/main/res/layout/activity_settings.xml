@@ -42,6 +42,23 @@
             android:textSize="18sp"
             android:layout_marginBottom="32dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timer mínimo de Lembrete (minutos antes)"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/edtTimerMinimo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ex: 5"
+            android:inputType="number"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="32dp"/>
+
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
@@ -49,6 +66,15 @@
             android:text="Logout"
             android:backgroundTint="#F44336"
             android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/btnVoltar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Voltar"
+            android:backgroundTint="#E0E0E0"
+            android:textColor="#333333"/>
 
     </LinearLayout>
 

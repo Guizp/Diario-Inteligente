@@ -51,16 +51,23 @@ class AddReminderActivity : AppCompatActivity() {
             val titulo = binding.edtTituloLembrete.text.toString().trim()
             val descricao = binding.edtDescricaoLembrete.text.toString().trim()
 
+            val prazoData = binding.edtPrazoData.text.toString().trim()
+            val prazoHora = binding.edtPrazoHora.text.toString().trim()
+
             if (titulo.isEmpty() || descricao.isEmpty()) {
                 Toast.makeText(this, "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            salvarNoFirestore(titulo, descricao)
+            salvarNoFirestore(titulo, descricao, prazoData, prazoHora)
+        }
+
+        binding.btnVoltar.setOnClickListener {
+            finish()
         }
     }
 
-    private fun salvarNoFirestore(titulo: String, descricao: String) {
+    private fun salvarNoFirestore(titulo: String, descricao: String, prazoData: String, prazoHora: String) {
         val userIdAtual = auth.currentUser?.uid ?: ""
 
         val sdfData = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -75,7 +82,9 @@ class AddReminderActivity : AppCompatActivity() {
             description = descricao,
             imageBase64 = imageBase64,
             date = dataAtual,
-            time = horaAtual
+            time = horaAtual,
+            prazoData = prazoData,
+            prazoHora = prazoHora
         )
 
 

@@ -50,6 +50,10 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Erro ao criar conta: ${e.message}", Toast.LENGTH_LONG).show()
                 }
         }
+
+        binding.btnVoltar.setOnClickListener {
+            finish()
+        }
     }
 
     private fun salvarUsuarioNoFirestore(uid: String, nome: String, email: String) {

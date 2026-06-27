@@ -58,13 +58,24 @@
         android:layout_marginBottom="16dp"
         android:padding="8dp" />
 
+
     <TextView
         android:id="@+id/txtDetalheDataHora"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/placeholder_data_hora"
         android:textColor="#999999"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/txtDetalhePrazo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prazo final: Carregando..."
+        android:textColor="#F44336"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/btnIrParaEditar"
@@ -73,6 +84,15 @@
         android:text="@string/btn_editar"
         android:backgroundTint="#2196F3"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Voltar"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#333333"/>
 
 </LinearLayout>
