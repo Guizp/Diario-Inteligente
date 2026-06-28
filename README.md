@@ -20,18 +20,18 @@ O app oferece uma interface moderna e adaptável, permitindo que o usuário:
 
 ### ☀️ Modo Claro (Português)
 <p align="left">
-  <img src="imagens/lista_modo-claro.png" width="150"/>
-  <img src="imagens/criar_modo-claro.png" width="150"/>
-  <img src="imagens/detalhes_modo-claro.png" width="150"/>
-  <img src="imagens/editar_modo-claro.png" width="150"/>
+  <img src="https://github.com/user-attachments/assets/f6c67a37-1f31-4b8b-8577-3d0013f3cd65" width="150"/>
+  <img src="https://github.com/user-attachments/assets/c5c4af31-5a66-4243-8e77-ae80512f6db7" width="150"/>
+  <img src="https://github.com/user-attachments/assets/2f8380dd-468a-41d0-ac90-05984c20722b" width="150"/>
+  <img src="https://github.com/user-attachments/assets/3c60af29-f96f-4ead-aa0d-de53476affb1" width="150"/>
 </p>
 
 ### 🌙 Modo Escuro (Português)
 <p align="left">
-  <img src="imagens/lista_modo-escuro.png" width="150"/>
-  <img src="imagens/criar_modo-escuro.png" width="150"/>
-  <img src="imagens/detalhes_modo-escuro.png" width="150"/>
-  <img src="imagens/editar_modo-escuro.png" width="150"/>
+  <img src="https://github.com/user-attachments/assets/ac590f21-1213-48f2-af78-9168a57552c1" width="150"/>
+  <img src="https://github.com/user-attachments/assets/cceb1190-2380-4a2d-85e3-18c8a21d2e29" width="150"/>
+  <img src="https://github.com/user-attachments/assets/f724c77c-2bde-48f7-a99d-3d7a99d6a4df" width="150"/>
+  <img src="https://github.com/user-attachments/assets/9cc4b1aa-3356-43b5-9b6c-b4cbb055b3c2" width="150"/>
 </p>
 
 ### English Mode (Light)
