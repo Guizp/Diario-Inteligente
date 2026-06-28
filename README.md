@@ -34,19 +34,11 @@ O app oferece uma interface moderna e adaptável, permitindo que o usuário:
   <img src="https://github.com/user-attachments/assets/9cc4b1aa-3356-43b5-9b6c-b4cbb055b3c2" width="150"/>
 </p>
 
-### English Mode (Light)
-<p align="left">
-  <img src="imagens/lista_ingles.png" width="150"/>
-  <img src="imagens/criar_ingles.png" width="150"/>
-  <img src="imagens/detalhes_ingles.png" width="150"/>
-  <img src="imagens/editar_ingles.png" width="150"/>
-</p>
-
 ---
 
 ## 🎥 Demonstração em Vídeo
-📹 **[Clique Aqui - Demonstração do App](imagens/video_app.webm)**
 
+<video src="https://github.com/user-attachments/assets/b4848846-979f-4138-a536-ffd203554e5b" width="100%" controls></video>
 ---
 
 ## 🧩 Funcionalidades Técnicas & Arquitetura
