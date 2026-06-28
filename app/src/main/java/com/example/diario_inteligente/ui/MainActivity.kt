@@ -1,12 +1,14 @@
 package com.example.diario_inteligente.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diario_inteligente.databinding.ActivityMainBinding
+import com.example.diario_inteligente.helper.NotificationHelper
 import com.example.diario_inteligente.model.Reminder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,6 +50,10 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+        }
     }
 
     override fun onStart() {
@@ -78,6 +84,14 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("MAIN_HOME", "Buscando lembretes no Firestore do usuário: $userIdAtual")
 
+        // Inicializa o seu helper de notificação
+        val notificationHelper = NotificationHelper(this)
+        notificationHelper.createNotificationChannel()
+
+        // Como você precisa passar o nome do usuário para a frase do Giovane,
+        // pegamos o e-mail ou o nome do display (ou uma String padrão caso esteja vazio)
+        val nomeUsuario = auth.currentUser?.displayName ?: "Usuário"
+
         db.collection("reminders")
             .whereEqualTo("userId", userIdAtual)
             .get()
@@ -88,10 +102,13 @@ class MainActivity : AppCompatActivity() {
                     val lembrete = documento.toObject(Reminder::class.java)
                     if (lembrete != null) {
                         listaLembretes.add(lembrete)
+
+                        // MÁGICA AQUI: Agenda o alarme de cada lembrete vindo do banco
+                        notificationHelper.agendarNotificacao(lembrete, nomeUsuario)
                     }
                 }
 
-                Log.d("MAIN_HOME", "Total de lembretes encontrados: ${listaLembretes.size}")
+                Log.d("MAIN_HOME", "Total de lembretes encontrados e agendados: ${listaLembretes.size}")
                 lembreteAdapter.atualizarLista(listaLembretes)
             }
             .addOnFailureListener { e ->
