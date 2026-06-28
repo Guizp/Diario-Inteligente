@@ -12,7 +12,7 @@ class LembreteAdapter(
     private val onCliqueLembrete: (Reminder) -> Unit
 ) : RecyclerView.Adapter<LembreteAdapter.LembreteViewHolder>() {
 
-    // Método simples para atualizar a lista quando o Firestore trouxer dados novos
+    // metodo simples para atualizar a lista quando o Firestore trouxer dados novos
     fun atualizarLista(novaLista: List<Reminder>) {
         this.lista = novaLista
         notifyDataSetChanged()

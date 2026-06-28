@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private lateinit var lembreteAdapter: LembreteAdapter
 
-    // Classes do Sensor e Configurações
     private lateinit var lightSensorManager: LightSensorManager
     private lateinit var preferences: SharedPreferences
 
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("MAIN_HOME", "MainActivity (Home) criada com sucesso.")
 
         lightSensorManager = LightSensorManager(this)
-        preferences = getSharedPreferences("app_settings", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
 
         configurarRecyclerView()
 
@@ -71,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val usarTemaAutomatico = preferences.getBoolean("tema_automatico", true);
+        val usarTemaAutomatico = preferences.getBoolean("tema_automatico", true)
 
         if (usarTemaAutomatico) {
             lightSensorManager.startListening { escuro ->
@@ -81,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                     AppCompatDelegate.MODE_NIGHT_NO
                 }
 
-                // PROTEÇÃO: Só altera o tema e recria a tela se o modo atual for diferente do alvo
+                // so altera o tema e recria a tela se o modo atual for diferente do alvo
                 if (AppCompatDelegate.getDefaultNightMode() != modoAlvo) {
                     AppCompatDelegate.setDefaultNightMode(modoAlvo)
                 }
@@ -96,8 +95,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        val usarTemaAutomatico = preferences.getBoolean("tema_automatico", true);
         carregarLembretesDoFirestore()
     }
 
@@ -122,38 +119,68 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("MAIN_HOME", "Buscando lembretes no Firestore do usuário: $userIdAtual")
+        Log.d("MAIN_HOME", "Buscando dados do usuário no Firestore: $userIdAtual")
 
-        // Inicializa o seu helper de notificação
+        // buscamos primeiro o nome na colecao "users"
+        db.collection("users").document(userIdAtual).get()
+            .addOnSuccessListener { documentoUsuario ->
+
+                val nomeUsuario = documentoUsuario.getString("name") ?: "Usuário"
+                Log.d("MAIN_HOME", "Nome real encontrado: $nomeUsuario")
+
+                val notificationHelper = NotificationHelper(this)
+                notificationHelper.createNotificationChannel()
+
+
+                db.collection("reminders")
+                    .whereEqualTo("userId", userIdAtual)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        val listaLembretes = mutableListOf<Reminder>()
+
+                        for (documento in querySnapshot.documents) {
+                            val lembrete = documento.toObject(Reminder::class.java)
+                            if (lembrete != null) {
+                                listaLembretes.add(lembrete)
+
+                                // Agora enviamos o nome REAL recuperado do Firestore
+                                notificationHelper.agendarNotificacao(lembrete, nomeUsuario)
+                            }
+                        }
+
+                        Log.d("MAIN_HOME", "Total de lembretes encontrados e agendados: ${listaLembretes.size}")
+                        lembreteAdapter.atualizarLista(listaLembretes)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("MAIN_HOME_ERR", "Erro ao buscar lembretes no Firestore", e)
+                        Toast.makeText(this, "Erro ao carregar seus lembretes.", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("MAIN_HOME_ERR", "Erro ao buscar nome do usuário no Firestore", e)
+                // se falhar o nome, não trava o app: carrega os lembretes com o valor padrão
+                carregarLembretesSemNome()
+            }
+    }
+
+    // metodo de segurança caso o Firestore falhe ao buscar o usuário
+    private fun carregarLembretesSemNome() {
+        val userIdAtual = auth.currentUser?.uid ?: ""
         val notificationHelper = NotificationHelper(this)
-        notificationHelper.createNotificationChannel()
-
-        // Como você precisa passar o nome do usuário para a frase do Giovane,
-        // pegamos o e-mail ou o nome do display (ou uma String padrão caso esteja vazio)
-        val nomeUsuario = auth.currentUser?.displayName ?: "Usuário"
 
         db.collection("reminders")
             .whereEqualTo("userId", userIdAtual)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val listaLembretes = mutableListOf<Reminder>()
-
                 for (documento in querySnapshot.documents) {
                     val lembrete = documento.toObject(Reminder::class.java)
                     if (lembrete != null) {
                         listaLembretes.add(lembrete)
-
-                        // MÁGICA AQUI: Agenda o alarme de cada lembrete vindo do banco
-                        notificationHelper.agendarNotificacao(lembrete, nomeUsuario)
+                        notificationHelper.agendarNotificacao(lembrete, "Usuário")
                     }
                 }
-
-                Log.d("MAIN_HOME", "Total de lembretes encontrados e agendados: ${listaLembretes.size}")
                 lembreteAdapter.atualizarLista(listaLembretes)
-            }
-            .addOnFailureListener { e ->
-                Log.e("MAIN_HOME_ERR", "Erro ao buscar lembretes no Firestore", e)
-                Toast.makeText(this, "Erro ao carregar seus lembretes.", Toast.LENGTH_SHORT).show()
             }
     }
 }

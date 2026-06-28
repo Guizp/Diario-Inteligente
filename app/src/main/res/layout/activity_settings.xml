@@ -23,10 +23,10 @@
             android:id="@+id/switchTema"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dark Mode"
-            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            android:text="Auto Day/Night"
             android:textColor="?attr/colorOnBackground"
-            android:layout_marginBottom="16dp"/>
+            android:textSize="18sp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchNotificacoes"
@@ -37,14 +37,7 @@
             android:textColor="?attr/colorOnBackground"
             android:layout_marginBottom="16dp"/>
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switchProximidade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Proximity Sensor"
-            android:textSize="18sp"
-            android:textColor="?attr/colorOnBackground"
-            android:layout_marginBottom="32dp"/>
+
 
         <TextView
             android:layout_width="wrap_content"

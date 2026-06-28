@@ -16,7 +16,6 @@ import com.example.diario_inteligente.ui.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-
 class NotificationHelper(private val context: Context) {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -44,29 +43,47 @@ class NotificationHelper(private val context: Context) {
 
     @SuppressLint("ScheduleExactAlarm")
     fun agendarNotificacao(lembrete: Reminder, nomeUsuario: String) {
+
         if (lembrete.prazoData.isEmpty() || lembrete.prazoHora.isEmpty()) return
 
         try {
-            val formatador = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-            val dataTexto = "${lembrete.prazoData} ${lembrete.prazoHora}"
-            val dataPrazoFinal = formatador.parse(dataTexto) ?: return
-
-            val calendar = Calendar.getInstance()
-            calendar.time = dataPrazoFinal
-            val tempoPrazoFinalMillis = calendar.timeInMillis
-
             val preferences = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-            val minutosAntecedencia = preferences.getInt("timer_minimo_lembrete", 5)
-            val milissegundosSubtrair = minutosAntecedencia * 60L * 1000L
 
-            val tempoAlarmeMillis = tempoPrazoFinalMillis - milissegundosSubtrair
-
-            if (tempoAlarmeMillis <= System.currentTimeMillis()) {
-                Log.d(TAG, "Horario do alarme ja passou.")
+            val notificacoesAtivas = preferences.getBoolean("notificacoes", true)
+            if (!notificacoesAtivas) {
+                Log.d(TAG, "Agendamento cancelado: Notificações desativadas nas configurações.")
                 return
             }
 
-            // Usando Intent explicita para apontar direto para a classe do Receiver
+            val formatador = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).apply {
+                timeZone = java.util.TimeZone.getDefault()
+            }
+            val dataTexto = "${lembrete.prazoData} ${lembrete.prazoHora}"
+            val dataPrazoFinal = formatador.parse(dataTexto) ?: return
+            val calendar = Calendar.getInstance()
+            calendar.time = dataPrazoFinal
+            val tempoPrazoFinalMillis = calendar.timeInMillis
+            val minutosAntecedencia = preferences.getInt("timer_minimo_lembrete", 5)
+            val milissegundosSubtrair = minutosAntecedencia * 60L * 1000L
+            var tempoAlarmeMillis = tempoPrazoFinalMillis - milissegundosSubtrair
+            val agora = System.currentTimeMillis()
+
+            if (tempoAlarmeMillis <= agora) {
+
+                // se o momento de antecedência já passou, mas o prazo FINAL ainda está no futuro,
+                // podemos ajustar para o alarme tocar exatamente no prazo final.
+                if (tempoPrazoFinalMillis > agora) {
+                    Log.d(TAG, "Antecedência de $minutosAntecedencia min já passou para [${lembrete.title}]. Agendando para o prazo exato.")
+                    tempoAlarmeMillis = tempoPrazoFinalMillis
+                } else {
+                    Log.d(TAG, "O prazo final do lembrete [${lembrete.title}] já expirou. Ignorando.")
+                    return
+                }
+            }
+
+            val dataFormatadaTeste = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(tempoAlarmeMillis)
+            Log.d(TAG, "Agendando \"${lembrete.title}\" para tocar em: $dataFormatadaTeste (Antecedência: $minutosAntecedencia min)")
+
             val intent = Intent(context, ReminderReceiver::class.java).apply {
                 putExtra("REMINDER_TITLE", lembrete.title)
                 putExtra("REMINDER_TIME", lembrete.prazoHora)
@@ -75,21 +92,23 @@ class NotificationHelper(private val context: Context) {
 
             val pendingIntent = PendingIntent.getBroadcast(
                 context,
-                lembrete.id.hashCode(),
+                lembrete.id.hashCode(), // Garante que cada lembrete tenha seu próprio alarme único
                 intent,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
+            // checagem de permissão para Android 12+ (Schedule Exact Alarms)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 if (!alarmManager.canScheduleExactAlarms()) {
                     val intentConfig = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                     intentConfig.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intentConfig)
-                    Log.d(TAG, "Permissao de alarme exato necessaria. Abrindo configuracoes.")
+                    Log.w(TAG, "Permissão de alarme exato necessária. Abrindo configurações do sistema.")
                     return
                 }
             }
 
+            // configuração do alarme preciso de acordo com a versão do Android
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
@@ -104,12 +123,12 @@ class NotificationHelper(private val context: Context) {
                 )
             }
 
-            Log.d(TAG, "Alarme definido com sucesso.")
+            Log.d(TAG, "Alarme para [${lembrete.title}] definido com sucesso.")
 
         } catch (e: SecurityException) {
-            Log.e(TAG, "Erro de permissao de alarme", e)
+            Log.e(TAG, "Erro de permissão de alarme (SecurityException)", e)
         } catch (e: Exception) {
-            Log.e(TAG, "Erro ao processar agendamento", e)
+            Log.e(TAG, "Erro ao processar agendamento do lembrete", e)
         }
     }
 
